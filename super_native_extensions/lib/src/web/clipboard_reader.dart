@@ -13,11 +13,10 @@ import 'reader_manager.dart';
 class ClipboardReaderImpl extends ClipboardReader {
   @override
   Future<DataReader> newClipboardReader() async {
-    final items = await window.navigator.clipboard.read().toDart;
+    final items = (await window.navigator.clipboard.read().toDart) as JSArray;
     final handle = $DataReaderHandle(
-      items.toDart
-          .map(
-            (e) => ClipboardItemHandle(e),
+      items.toDart.map(
+            (e) => ClipboardItemHandle(e as ClipboardItem),
           )
           .toList(growable: false),
     );

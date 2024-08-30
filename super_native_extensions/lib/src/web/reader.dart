@@ -72,11 +72,11 @@ class ClipboardItemHandle extends $DataReaderItemHandle {
 
   @override
   Future<Object?> getDataForFormat(String format) async {
-    final data = await item.getType(format).toDart;
+    final data = (await item.getType(format).toDart) as web.Blob;
     if (format.startsWith('text/')) {
       return data.text().toDart;
     } else {
-      return (await data.arrayBuffer().toDart).toDart.asUint8List();
+      return ((await data.arrayBuffer().toDart) as ByteBuffer).asUint8List();
     }
   }
 
@@ -161,8 +161,8 @@ class DataTransferItemHandle implements $DataReaderItemHandle {
         final file = this.file;
         if (file != null) {
           final slice = file.slice();
-          final buffer = await slice.arrayBuffer().toDart;
-          return buffer.toDart.asUint8List();
+          final buffer = (await slice.arrayBuffer().toDart) as ByteBuffer;
+          return buffer.asUint8List();
         }
       }
     }
@@ -262,7 +262,7 @@ class _VirtualFile extends VirtualFile {
       _reader = web.ReadableStreamDefaultReader(stream);
     }
 
-    final next = await _reader!.read().toDart;
+    final next = (await _reader!.read().toDart) as web.ReadableStreamReadResult;
     if (next.done) {
       return Uint8List(0);
     } else {
