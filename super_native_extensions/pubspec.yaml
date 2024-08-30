@@ -57,6 +57,6 @@ flutter:
         pluginClass: SuperNativeExtensionsPlugin
       windows:
         pluginClass: SuperNativeExtensionsPluginCApi
-      web:
-        pluginClass: SuperNativeExtensionsWeb
-        fileName: super_native_extensions_web.dart
+#      web:
+#        pluginClass: SuperNativeExtensionsWeb
+#        fileName: super_native_extensions_web.dart
